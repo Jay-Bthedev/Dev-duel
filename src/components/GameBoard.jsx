@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "./Card";
 
-// 1. Standard Cards (For everyone)
+//  Standard Cards 
 const STANDARD_DECK = [
   { id: 1, name: "Junior Dev", rarity: "Common", attack: 2, defense: 2, icon: "💻", description: "Breaks prod on Fridays." },
   { id: 2, name: "Full Stack", rarity: "Rare", attack: 5, defense: 4, icon: "🚀", description: "Can center a div." },
@@ -10,7 +10,7 @@ const STANDARD_DECK = [
   { id: 5, name: "AI Copilot", rarity: "Rare", attack: 6, defense: 3, icon: "🤖", description: "Writes code faster than you." },
 ];
 
-// 2. Legendary Card (Only for Wallet Users)
+// Legendary Card 
 const LEGENDARY_CARD = { 
   id: 99, 
   name: "Vitalik", 
@@ -24,27 +24,27 @@ const LEGENDARY_CARD = {
 const GameBoard = ({ isGuest }) => {
   const [playerHand, setPlayerHand] = useState([]);
   const [enemyHand, setEnemyHand] = useState([]);
-  const [gameState, setGameState] = useState('idle'); // 'idle', 'playing', 'finished'
+  const [gameState, setGameState] = useState('idle');
   const [result, setResult] = useState(null);
   const [score, setScore] = useState({ player: 0, enemy: 0 });
 
   const dealCards = () => {
-    // A. Create Base Deck (Duplicate standard cards to have enough to shuffle)
+    //Create Base Deck 
     let deck = [...STANDARD_DECK, ...STANDARD_DECK, ...STANDARD_DECK];
 
-    // B. WALLET BONUS: If user is NOT a guest, add the Legendary Card
+    //  WALLET BONUS: If user is NOT a guest, add the Legendary Card
     if (!isGuest) {
       deck.push(LEGENDARY_CARD);
     }
 
-    // C. Shuffle
+    // Shuffle
     deck = deck.sort(() => Math.random() - 0.5);
     
-    // D. Deal
+    // Deal
     setPlayerHand(deck.slice(0, 3));
     setEnemyHand(deck.slice(3, 6));
     
-    // E. Start Game
+    // Start Game
     setGameState('playing');
     setResult(null);
   };
